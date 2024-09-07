@@ -1,0 +1,152 @@
+service: softtek
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  environment:
+    SWAPI_URL: ${env:SWAPI_URL}
+    NODE_ENV: ${self:provider.stage}
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:*"
+          Resource: "*"
+
+
+resources:
+  Resources:
+    PlanetsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PlanetsTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    SpeciesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: SpeciesTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    PeopleTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PeopleTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    FilmsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: FilmsTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    VehiclesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: VehiclesTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    StarshipsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: StarshipsTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+
+
+functions:
+  getAll:
+    handler: handler.getAll
+    events:
+      - http:
+          path: /{category}
+          method: get
+  getById:
+    handler: handler.getById
+    events:
+      - http:
+          path: /{category}/{id}
+          method: get
+  create:
+    handler: handler.save
+    events:
+      - http:
+          path: /{category}
+          method: post
+  createFromApi:
+    handler: handler.createFromApi
+    events:
+      - http:
+          path: fromapi/{category}/{id}
+          method: post
+
+custom:
+  esbuild:
+      bundle: true
+      sourcemap: true
+
+  serverless-dynamodb:
+    stages:
+      - dev
+      - prod
+    start:
+      docker: true
+      migrate: true
+      seed: false
+      port: 8000
+      inMemory: false
+
+
+
+plugins:
+  - serverless-esbuild
+  - serverless-dynamodb
+  - serverless-offline

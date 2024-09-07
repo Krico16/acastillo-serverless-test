@@ -1,0 +1,22 @@
+services:
+  softtek:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  softtek-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: softtek
+    ports:
+      - "3306:3306"
+    volumes:
+      - softtek-db:/var/lib/mysql
