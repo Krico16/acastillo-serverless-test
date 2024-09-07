@@ -103,6 +103,12 @@ resources:
 
 
 functions:
+  index:
+    handler: handler.index
+    events:
+      - http:
+          path: /
+          method: get
   getAll:
     handler: handler.getAll
     events:

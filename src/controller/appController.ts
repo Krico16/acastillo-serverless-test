@@ -106,6 +106,24 @@ export class AppController {
       }
     }
   }
+
+  async index(event: any, context: any) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: 'Welcome to my test',
+        categories: [
+          'personajes',
+          'planetas',
+          'naves',
+          'vehiculos',
+          'especies',
+          'peliculas'
+        ]
+      })
+    }
+
+  }
 }
 
 
@@ -123,6 +141,7 @@ enum dbGroup {
   'species' = 'SpeciesTable',
   'films' = 'FilmsTable',
 }
+
 const customID = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5);
 
 const dbParsers = {
