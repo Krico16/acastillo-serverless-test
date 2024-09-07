@@ -18,7 +18,7 @@
 - Crear un modelo de su elección mediante el uso de un endpoint POST, la data se tendrá que almacenar dentro de una base de datos.
 - Crear un endpoint GET que muestre la data almacenada.
 
-## SOLUTION:
+## Solution:
 
   Para la solución de este problema se utilizó el framework Serverless para la creación de una API en Node.js, 
   la cual se desplegó en AWS. Se crearon 4 endpoints, 2 GET y 2 POST.
@@ -37,7 +37,7 @@
   - vehiculos
   - naves
 
-## ENDPOINTS:
+## Endpoints:
 
   La url de la API desplegada en AWS es la siguiente:
   ```
