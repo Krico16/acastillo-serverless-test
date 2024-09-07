@@ -18,3 +18,7 @@ export const save: Handler = async (event, context: Context) => {
 export const createFromApi: Handler = async (event, context: Context) => {
   return appController.saveFromApi(event, context);
 }
+
+export const index: Handler = async (event, context: Context) => {
+  return appController.index(event, context);
+}
